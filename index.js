@@ -1,5 +1,7 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+const generateHTML = require("./src/generateHTML.js");
+
 
 const teamArray = [];
 
@@ -67,4 +69,27 @@ const addEmployee = () => {
   ]);
 };
 
-addEmployee();
+writeToFile = (data) => {
+  fs.writeFile("./dist/index.html", (data), (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Team Page successfully generated!");
+    }
+  })
+};
+
+init = () => {
+  addEmployee()
+  .then((teamArray) => {
+    return generateHTML(teamArray);
+  })
+  .then((data) => {
+    return writeToFile(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+};
+
+init();
