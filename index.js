@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const generateHTML = require("./src/generateHTML.js");
+const generatePage = require("./src/generateHTML.js");
 
 const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
@@ -119,7 +119,39 @@ const addEmployee = () => {
           }
         }
     },
-  ]);
+    {
+      type: 'confirm',
+      name: 'addAnotherEmployee',
+      message: 'Would you like add another employee?'
+    }
+  ])
+  .then( employeeInfo => {
+    
+    let { name, id, email, role, office, github, school, addAnotherEmployee } = employeeInfo;
+    let employee;
+    
+    if (role === "Manager") {
+      employee = new Manager (name, id, email, role, office);
+      console.log(employee);
+
+    } else if (role === "Engineer") {
+      employee = new Engineer (name, id, email, role, github);
+      console.log(employee);
+
+    } else if (role === "Intern") {
+      employee = new Intern (name, id, email, role, school);
+      console.log(employee);
+      
+    }
+    teamArray.push(employee);
+
+    if (addAnotherEmployee) {
+      addEmployee(teamArray);
+    } else {
+      return teamArray;
+    }
+    
+  })
 };
 
 writeToFile = (data) => {
@@ -135,7 +167,7 @@ writeToFile = (data) => {
 init = () => {
   addEmployee()
   .then((teamArray) => {
-    return generateHTML(teamArray);
+    return generatePage(teamArray);
   })
   .then((data) => {
     return writeToFile(data);
@@ -146,3 +178,4 @@ init = () => {
 };
 
 init();
+
