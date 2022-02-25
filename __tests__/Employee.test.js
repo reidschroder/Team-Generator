@@ -10,5 +10,5 @@ test("creates an employee object", () => {
 
     expect(employee.email).toEqual(expect.any(String));
 
-    expect(employee.position).toBe("Employee");
+    expect(employee.role).toBe("Employee");
 })
