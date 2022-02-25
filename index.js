@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const generatePage = require("./src/generateHTML.js");
+const generateTeam = require("./src/generateHTML.js");
 
 const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
@@ -167,7 +167,7 @@ writeToFile = (data) => {
 init = () => {
   addEmployee()
   .then((teamArray) => {
-    return generatePage(teamArray);
+    return generateTeam(teamArray);
   })
   .then((data) => {
     return writeToFile(data);
@@ -178,4 +178,5 @@ init = () => {
 };
 
 init();
+
 
