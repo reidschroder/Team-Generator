@@ -125,6 +125,7 @@ const addEmployee = () => {
       message: 'Would you like add another employee?'
     }
   ])
+
   .then( employeeInfo => {
     
     let { name, id, email, role, office, github, school, addAnotherEmployee } = employeeInfo;
@@ -145,10 +146,11 @@ const addEmployee = () => {
     }
     teamArray.push(employee);
 
-    if (addAnotherEmployee) {
-      addEmployee(teamArray);
+    if (addAnotherEmployee === true) {
+      addEmployee();
     } else {
-      return teamArray;
+      let writeTeam = generateTeam(teamArray);
+      writeToFile(writeTeam);
     }
     
   })
@@ -158,9 +160,7 @@ writeToFile = (data) => {
   fs.writeFile("./dist/index.html", (data), (err) => {
     if (err) {
       console.log(err);
-    } else {
-      console.log("Team Page successfully generated!");
-    }
+    } 
   })
 };
 
